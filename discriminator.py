@@ -11,7 +11,7 @@ class Discriminator(nn.Module):
         args:
             input_nc (int): number of channels (like 3 channels for rgb) of input image
         """
-
+        # TODO
         self.model = None
 
     def forward(self, x):
