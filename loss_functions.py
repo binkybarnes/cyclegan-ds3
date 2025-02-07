@@ -13,8 +13,9 @@ def adversarial_loss(D, real, fake):
     Returns:
         torch.Tensor: adversarial loss
     """
-    # TODO
-    ...
+    real_loss = torch.mean((D(real) -1)**2)
+    fake_loss = torch.mean((D(fake))**2)
+    return (real_loss + fake_loss)
 
 
 def cycle_consistency_loss(G, F, real_X, real_Y):
@@ -31,8 +32,12 @@ def cycle_consistency_loss(G, F, real_X, real_Y):
     Returns:
         torch.Tensor: cycle consistency loss
     """
-    # TODO
-    ...
+    x = F(G(real_X))
+    y = G(F(real_Y))
+
+    x_loss = nn.L1Loss(x, real_x)
+    y_loss = nn.L1Loss(y, real_y)
+    return x_loss + y_loss
 
 
 def identity_loss(G, F, real_X, real_Y):
@@ -50,8 +55,12 @@ def identity_loss(G, F, real_X, real_Y):
     Returns:
         torch.Tensor: The identity loss value.
     """
-    # TODO
-    ...
+    x = F(real_X)
+    y = G(real_Y)
+
+    x_loss = nn.L1Loss(x, real_x)
+    y_loss = nn.L1Loss(y, real_y)
+    return x_loss + y_loss
 
 
 # COULD BE MORE LOSS FUNCTIONS
